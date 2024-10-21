@@ -21,5 +21,6 @@ class ComposableFactory {
   BottomToNavRail bottomToNavRail() => BottomToNavRailImpl();
 
   Box box() => BoxImpl();
+  CardBuilder card() =>CardImpl();
 
 }

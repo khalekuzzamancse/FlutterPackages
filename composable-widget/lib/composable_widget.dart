@@ -579,3 +579,101 @@ class FabImpl implements Fab{
 }
 
 
+
+abstract class CardBuilder {
+  CardBuilder color(Color? color);
+
+  CardBuilder shadowColor(Color? shadowColor);
+
+  CardBuilder surfaceTintColor(Color? surfaceTintColor);
+
+  CardBuilder elevation(int elevation); // Non-null and integer
+
+  CardBuilder shape(ShapeBorder? shape);
+
+  CardBuilder borderOnForeground(bool borderOnForeground);
+
+  CardBuilder marginAll(double margin);
+
+  CardBuilder child({required Widget child,  Modifier? modifier=null});
+
+  Widget build();
+}
+class CardImpl implements CardBuilder {
+  Color? _color;
+  Color? _shadowColor;
+  Color? _surfaceTintColor;
+  int _elevation = 0; // Default non-null elevation
+  ShapeBorder? _shape;
+  bool _borderOnForeground = true;
+  EdgeInsetsGeometry? _margin;
+  Widget? _child;
+
+
+  @override
+  CardBuilder color(Color? color) {
+    _color = color;
+    return this;
+  }
+
+  @override
+  CardBuilder shadowColor(Color? shadowColor) {
+    _shadowColor = shadowColor;
+    return this;
+  }
+
+  @override
+  CardBuilder surfaceTintColor(Color? surfaceTintColor) {
+    _surfaceTintColor = surfaceTintColor;
+    return this;
+  }
+
+  @override
+  CardBuilder elevation(int elevation) {
+    _elevation = elevation; // Set integer elevation
+    return this;
+  }
+
+  @override
+  CardBuilder shape(ShapeBorder? shape) {
+    _shape = shape;
+    return this;
+  }
+
+  @override
+  CardBuilder borderOnForeground(bool borderOnForeground) {
+    _borderOnForeground = borderOnForeground;
+    return this;
+  }
+
+  @override
+  CardBuilder marginAll(double margin) {
+    _margin = EdgeInsets.all(margin);
+    return this;
+  }
+
+  @override
+  CardBuilder child({required Widget child,  Modifier? modifier=null}) {
+    Widget modifiedChild = modifier != null ? child.modifier(modifier) : child;
+    _child = modifiedChild;
+
+    return this;
+  }
+
+  // Build method to construct the Card widget
+  @override
+  Widget build() {
+    return Card(
+      color: _color,
+      shadowColor: _shadowColor,
+      surfaceTintColor: _surfaceTintColor,
+      elevation: _elevation.toDouble(), // Convert to double as required by Card widget
+      shape: _shape,
+      borderOnForeground: _borderOnForeground,
+      margin: _margin,
+      child: _child, // Child widget with applied modifier
+    );
+  }
+}
+
+

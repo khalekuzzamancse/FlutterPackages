@@ -42,6 +42,14 @@ class Modifier {
       );
     }]);
   }
+  /// Wrap the widget into  an [SingleChildScrollView] Widget
+  Modifier scrollable() {
+    return Modifier._([..._modifiers, (widget) {
+      return SingleChildScrollView(
+        child: widget,
+      );
+    }]);
+  }
 
   /// Wrap the widget into  an [Padding] Widget with given paddings
   Modifier padding(
